@@ -75,10 +75,16 @@ From the root of the project, you can run the following command to create the st
 aws cloudformation create-stack --stack-name web-app-stack --template-body file://template/vpc-ec2-elb.yaml --parameters ParameterKey=ProjectName,ParameterValue=WebApp ParameterKey=VpcCIDR,ParameterValue=10.0.0.0/16 ParameterKey=PublicSubnet1CIDR,ParameterValue=10.0.1.0/24 ParameterKey=PrivateSubnet1CIDR,ParameterValue=10.0.2.0/24 ParameterKey=PublicSubnet2CIDR,ParameterValue=10.0.3.0/24 ParameterKey=PrivateSubnet2CIDR,ParameterValue=10.0.4.0/24
 ```
 
-To check the status of thee stack, you can run the following command:
+To check the status of the stack, you can run the following command:
 
 ```sh
 aws cloudformation describe-stacks --stack-name web-app-stack
+```
+
+To update the stack after a modification, you can run the following command:
+
+```sh
+aws cloudformation update-stack --stack-name web-app-stack --template-body file://template/vpc-ec2-elb.yaml
 ```
 
 To list the resources of thee stack, you can run the following command:
@@ -90,10 +96,18 @@ aws cloudformation list-stack-resources --stack-name web-app-stack
 ### 5.2 Accessing the Application
 
 After the stack is created, you can access the web application using the DNS name of the Application Load Balancer, which is provided in the stack outputs. You can just open the URL with your browser. By clicking many times, you can see that the availability zone that is displayed is alternating.
+This shows the load balancer is effectively load balancing across both EC2 instances across two availability zones.
 
-You can also use the command line to access the website and hit the Load Balancer in a loop with the following:
+You can also use the command line to access the website and hit the Load Balancer in a loop with the following. Press ‘CTRL + C’ to exit the loop.
+
 ```sh
 while true; do curl http://DNSNameOfTheApplicationLoadBalancer; sleep 2; done
+```
+
+Use the following command to get the DNS name
+
+```sh
+aws cloudformation describe-stacks --stack-name web-app-stack --query "Stacks[0].Outputs[?OutputKey=='LoadBalancerDNSName'].OutputValue" --output text
 ```
 
 ### 5.3 Deleting the stack

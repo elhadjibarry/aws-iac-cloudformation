@@ -418,7 +418,7 @@ Resources:
 # Outputs section of the template allows you to define the outputs of the template that you want to be displayed after the stack is created.
 # In this template, we are outputting the URL of the website that is served by the Application Load Balancer.
 Outputs:
-  WebsiteURL:
+  LoadBalancerDNSName:
     Description: URL of the website
     Value: !Join
       - ''
