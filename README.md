@@ -2,6 +2,11 @@
 
 This CloudFormation template deploys a robust network architecture on AWS following the best practice. It includes a VPC, subnets, NAT gateways, EC2 instances, Auto Scaling Group (ASG) and an Application Load Balancer (ALB). The template also sets up the necessary security groups for the EC2 instances and the ALB.
 
+## 1. Prerequisites
+- AWS account with appropriate permissions
+- Basic understanding of AWS services
+- For CLI method: AWS CLI installed and configured
+
 ## 1. Description
 
 This template performs the following tasks:
