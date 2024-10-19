@@ -469,5 +469,6 @@ Outputs:
         - !GetAtt ApplicationLoadBalancer.DNSName
 
   Route53Record:
-      Description: The Route 53 record for the Application Load Balancer
-      Value: !Ref DomainName
+    Condition: CreateRoute53Record
+    Description: The Route 53 record for the Application Load Balancer
+    Value: !Ref DomainName

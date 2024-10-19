@@ -86,16 +86,16 @@ Create the stack without a Route 53 record by running the following command from
 aws cloudformation create-stack --stack-name web-app-stack --template-body file://cloudformation/vpc-ec2-asg-elb.yaml --parameters ParameterKey=ProjectName,ParameterValue=WebApp ParameterKey=VpcCIDR,ParameterValue=10.0.0.0/16 ParameterKey=PublicSubnet1CIDR,ParameterValue=10.0.1.0/24 ParameterKey=PrivateSubnet1CIDR,ParameterValue=10.0.2.0/24 ParameterKey=PublicSubnet2CIDR,ParameterValue=10.0.3.0/24 ParameterKey=PrivateSubnet2CIDR,ParameterValue=10.0.4.0/24
 ```
 
-Use the following command to get the he hosted zone ID for your domain name. Replace example.com. with your actual domain name (note the trailing dot).
-
-```sh
-aws route53 list-hosted-zones --query "HostedZones[?Name=='example.com.'].Id" --output text
-```
-
-To create the stack with a Route 53 record that will act as an alias to the ALB, run the following command from the current directory:
+To create the stack with a Route 53 record that will act as an alias to the ALB, run the following command from the current directory. The hosted zone ID can be obtained with the next command
 
 ```sh
 aws cloudformation create-stack --stack-name web-app-stack --template-body file://cloudformation/vpc-ec2-asg-elb.yaml --parameters ParameterKey=ProjectName,ParameterValue=WebApp ParameterKey=VpcCIDR,ParameterValue=10.0.0.0/16 ParameterKey=PublicSubnet1CIDR,ParameterValue=10.0.1.0/24 ParameterKey=PrivateSubnet1CIDR,ParameterValue=10.0.2.0/24 ParameterKey=PublicSubnet2CIDR,ParameterValue=10.0.3.0/24 ParameterKey=PrivateSubnet2CIDR,ParameterValue=10.0.4.0/24 ParameterKey=HostedZoneId,ParameterValue=myHostedZoneId ParameterKey=DomainName,ParameterValue=example.com
+```
+
+Use the following command to get the hosted zone ID for your domain name. Replace example.com. with your actual domain name (note the trailing dot).
+
+```sh
+aws route53 list-hosted-zones --query "HostedZones[?Name=='example.com.'].Id" --output text
 ```
 
 To check the status of the stack, you can run the following command:
