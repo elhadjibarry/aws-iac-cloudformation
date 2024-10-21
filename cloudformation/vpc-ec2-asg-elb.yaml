@@ -6,6 +6,7 @@ Description:  This template deploys the following resources
   Application Load Balancer that will distribute traffic between the EC2 instances.
   Auto Scaling Group that will maintain the desired number of EC2 instances depending on the load. 
   Security groups for the EC2 instances and the Application Load Balancer.
+  Optional - Route 53 record to point to the Application Load Balancer.
 
 #Parameters to be passed to the template at the time of deployment. 
 #You can pass these parameters through the AWS Management Console, AWS CLI, or AWS SDKs.
@@ -77,6 +78,7 @@ Mappings:
       "AMI": "ami-0d081196e3df05f4d"
 
 #Conditions are used to control the creation of resources based on the input parameters or other conditions.
+#In this template, we are using a condition to check if the HostedZoneId and DomainName parameters are provided to create a Route 53 record.
 Conditions:
   CreateRoute53Record: !And
     - !Not [!Equals [!Ref HostedZoneId, ""]]
